@@ -1,0 +1,4 @@
+#!/usr/bin/python3 -B
+
+import app
+app.run()
