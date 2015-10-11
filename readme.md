@@ -2,11 +2,11 @@
 
 nginx-lm is command line app written in python that helps you publish and manage apps with nginx, focusing on publishing them _locally_.
 
-in a nutshell, it is a tool to generate nginx config files for you, specially for internal personal projects.
+In a nutshell, it is a tool to generate nginx config files for you, specially for internal personal projects.
 
 # why
 
-writing config files is a repetitive task, so we should automate it. because i say so.
+Because writing config files is a repetitive task, so we should automate it.
 
 # how
 
@@ -14,17 +14,28 @@ nginx-lm works on "templates". your project structure should follow that templat
 
 for a list of built-in templates, see the app/src/templates directory, and their README files.
 
-# stuff
+# customizing
 
-- you can write your own templates
-
-# usage
-
-TBD. for now, see `--help`'s output
+You can write your own templates for nginx-lm and put them in the `/templates` directory of the source and re-install. Soon, nginx-lm will provide a way to dynamically install custom templates from the CLI.
 
 # installation
 
-TBD
+Please make sure you have `python3-setuptools` and `unzip` installed. If you get an error stating `ImportError`, then you need to install `python3-setuptools`. If an error saying `unzip: Command not found`, then please install `unzip`. After that, run:
+
+```
+curl https://raw.githubusercontent.com/awalGarg/nginx-lm/master/install.sh | sudo bash
+```
+
+This will install the package, and make the `nlm` binary available globally.
+
+# usage
+
+```
+nlm --help
+```
+Example: [![asciicast](https://asciinema.org/a/27698.png)](https://asciinema.org/a/27698)
+
+Note: nginx-lm requires root access for most of the commands since it has to write config files to `/etc/nginx/` etc. and issue commands like `service nginx reload` which are restricted to the super user.
 
 # requirements
 
@@ -37,6 +48,25 @@ i don't know the lowest requirements, but I do have *suggested* requirements. ha
 Windows and OSX are not supported. nginx-lm might or might not work with them, nobody cares.
 
 root access is required for stuff like writing config files, issuing `service nginx reload` etc.
+
+**Note**:
+
+nginx-lm currently assumes that in the directory where nginx config is stored, there exists either a single `conf.d` directory meant to be holding config files with the `.conf` extension referenced in the `nginx.conf` file, OR a `sites-available` and `sites-enabled` directory with `nginx.conf` including all files from `sites-enabled` with whatever extension.
+
+One of these is the default directory structure verified on the following distros:
+
+ - Mint
+ - Debian
+ - Ubuntu
+ - openSUSE
+ - Fedora
+ - CentOS
+
+Please do not change that structure, it can break nginx-lm.
+
+**Arch Linux users**:
+
+Arch's default nginx config provides only a barebones config structure, and you must manually execute the instructions provided at [the official Arch wiki](https://wiki.archlinux.org/index.php/Nginx#Managing_server_entries), replacing `servers` with `sites` in the directory names.
 
 # stability status
 
