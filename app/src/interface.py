@@ -95,6 +95,11 @@ p_install.add_argument(
     default=("%s.dev" % os.path.basename(os.path.normpath(CWD)))
 )
 p_install.add_argument(
+    "-c", "--cors",
+    action="store_true", default=False,
+    help="allow cross origin sharing on this host, defaults to False"
+)
+p_install.add_argument(
     "--access-log",
     help="set access log file, defaults to $CWD/nlm-access.log",
     default=("%s/nlm-access.log" % CWD)

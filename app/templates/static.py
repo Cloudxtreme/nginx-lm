@@ -10,16 +10,23 @@ def predict_score(args=None):
 
 
 def construct_config(args=None):
-    return '''
-server {{
+    main_config = '''
     listen {port};
     server_name {host};
     root {directory};
     autoindex on;
     access_log {access_log};
     error_log {error_log};
-}}
 '''.format(**vars(args))
+
+    if args.cors:
+        main_config = main_config + '''
+    add_header 'Access-Control-Allow-Origin' '*';
+    add_header 'Access-Control-Allow-Credentials' 'true';
+    add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+'''
+
+    return "server {\n%s\n}" % main_config
 
 
 def post_install(args=None):
