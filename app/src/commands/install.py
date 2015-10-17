@@ -48,6 +48,7 @@ def install_with_template(args, name, template):
         'template_name': name,
         'args': vars(args)
     }
+    print("Preparing to initialize template, host is %s" % args.host)
     if template.TEMPLATE_TYPE == Template_Type.managed:
         state['template_type'] = 'managed'
         config = template.construct_config(args, shelf)
