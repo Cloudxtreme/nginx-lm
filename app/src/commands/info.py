@@ -7,7 +7,7 @@ from app.src import confighelpers as Configurer
 from app.src.constants import Nginx_Dir_Type
 
 
-def main(*args):
+def main(args=None):
     n_version, n_args, n_dir_type = Configurer.get_nginx_details()
     if n_dir_type == Nginx_Dir_Type.light:
         n_dir = "%s/conf.d" % n_args.prefix

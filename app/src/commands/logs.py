@@ -29,7 +29,7 @@ def tail(*paths):
         sys.exit(0)
 
 
-def main(args):
+def main(args=None):
     state = Configurer.read_state(args)
     c_args = Configurer.Struct(**state.get('args'))
     tail(c_args.access_log, c_args.error_log)

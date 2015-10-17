@@ -8,6 +8,7 @@ import time
 from app.config import TEMPLATE_STORE_LOCATION
 from app.src.constants import Template_Score, Template_Type
 from app.src import confighelpers as Configurer
+from app.src.commands.config import shelf
 
 
 def get_available_templates():
@@ -49,21 +50,22 @@ def install_with_template(args, name, template):
     }
     if template.TEMPLATE_TYPE == Template_Type.managed:
         state['template_type'] = 'managed'
-        config = template.construct_config(args)
+        config = template.construct_config(args, shelf)
         Configurer.install_config(args.project_name)
         Configurer.set_config(args.project_name, config)
         Configurer.enable_config(args.project_name)
     elif template.TEMPLATE_TYPE == Template_Type.unmanaged:
         state['template_type'] = 'unmanaged'
-        template.initialize(args)
+        template.initialize(args, shelf)
     else:
         raise RuntimeError('Malformed template!')
 
     if getattr(template, 'post_install', None):
         state['has_post_install'] = True
-        template.post_install(args)
+        template.post_install(args, shelf)
 
     Configurer.write_state(state, args)
+    shelf.sync()
 
 
 def main(args):

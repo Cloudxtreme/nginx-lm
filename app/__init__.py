@@ -3,6 +3,7 @@ import logging
 import subprocess
 
 from app.src import interface
+from app.src.commands.config import shelf
 
 name = 'nginx-lm'
 version = '0.0.1'
@@ -22,6 +23,8 @@ def run():
         mod.main(args)
         if not args.no_auto_reload:
             print(subprocess.getoutput('service nginx reload'))
+
+    shelf.close()
 
 
 def setup_custom_logger(name, level=logging.WARNING):

@@ -3,6 +3,7 @@ from importlib import import_module
 from app.src import confighelpers as Configurer
 from app.src.commands import disable
 from app.src.constants import Config_Status
+from app.src.commands.config import shelf
 
 
 def main(args=None):
@@ -15,7 +16,7 @@ def main(args=None):
         print("Rolling back changes")
         import_module(
             'app.templates.%s' % state['template_name']
-        ).rollback(c_args)
+        ).rollback(c_args, shelf)
     Configurer.uninstall_config(c_args.project_name)
     Configurer.erase_state(c_args)
     print('Aww! That was pretty sad, but we removed all traces...')

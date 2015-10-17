@@ -5,11 +5,11 @@ from app.src import confighelpers as Configurer
 TEMPLATE_TYPE = Template_Type.managed
 
 
-def predict_score(args=None):
+def predict_score(args=None, shelf=None):
     return Template_Score.unsure
 
 
-def construct_config(args=None):
+def construct_config(args=None, shelf=None):
     main_config = '''
     listen {port};
     server_name {host};
@@ -29,9 +29,9 @@ def construct_config(args=None):
     return "server {\n%s\n}" % main_config
 
 
-def post_install(args=None):
+def post_install(args=None, shelf=None):
     return Configurer.hosts_add(args.host)
 
 
-def rollback(args=None):
+def rollback(args=None, shelf=None):
     return Configurer.hosts_remove(args.host)
